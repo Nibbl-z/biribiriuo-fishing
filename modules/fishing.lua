@@ -3,9 +3,19 @@ fishing.FishCount = 0
 fishing.IsFishing = false
 local fishDelay = -1
 
+local rarities = {
+    Common = {
+        "Biribiriuo", "ShockedBiribiriuo"
+    },
+    
+    Uncommon = {
+        "Pausegill", "Quicknibble", "Threefish"
+    }
+}
+
 local fishingChances = {
-    {Type = "Biribiriuo", Chance = 60},
-    {Type = "ShockedBiribiriuo", Chance = 40}
+    {Type = "Common", Chance = 60},
+    {Type = "Uncommon", Chance = 40},
 }
 
 function fishing:Update(dt)
@@ -16,11 +26,8 @@ function fishing:Update(dt)
             local total = 0
             
             for _, fishtype in ipairs(fishingChances) do
-                print(fishtype.Type, fishtype.Chance)
-                print(roll)
-                print(fishtype.Chance + total)
                 if roll < fishtype.Chance + total then
-                    fish = fishtype.Type
+                    fish = rarities[fishtype.Type][love.math.random(#rarities[fishtype.Type])]
                     break
                 end
 

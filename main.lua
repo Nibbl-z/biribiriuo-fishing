@@ -10,7 +10,10 @@ local sprites = {
     YanCatch = love.graphics.newImage("/img/yan_catch.png"),
 
     Biribiriuo = love.graphics.newImage("/img/fish/biribiriuo.png"),
-    ShockedBiribiriuo = love.graphics.newImage("/img/fish/shocked_biribiriuo.png")
+    ShockedBiribiriuo = love.graphics.newImage("/img/fish/shocked_biribiriuo.png"),
+    Pausegill = love.graphics.newImage("/img/fish/pausegill.png"),
+    Quicknibble = love.graphics.newImage("/img/fish/quicknibble.png"),
+    Threefish = love.graphics.newImage("/img/fish/threefish.png"),
 }
 
 local fishingState = "IDLE"
