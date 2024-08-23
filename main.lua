@@ -1,6 +1,7 @@
 local fishing = require("modules.fishing")
 local utils = require("yan.utils")
 local fishes = require("modules.fishes")
+local shop = require("modules.shop")
 
 local coins = 0
 
@@ -60,6 +61,7 @@ function StartDelay(name)
 end
 
 function love.load()
+    shop:Init()
     for i = 1, 20 do
         local x = love.math.random(0,100)
         local y = love.math.random(0,73)
