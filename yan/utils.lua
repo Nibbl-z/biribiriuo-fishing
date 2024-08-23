@@ -26,4 +26,8 @@ function utils:CheckCollision(x1, y1, w1, h1, x2, y2, w2, h2)
         y2 < y1+h1
 end
 
+function utils:Round(number, multiple)
+    return math.floor(number / multiple + 0.5) * multiple
+end
+
 return utils
