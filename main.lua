@@ -1,5 +1,9 @@
 local fishing = require("modules.fishing")
 local utils = require("yan.utils")
+local fishes = require("modules.fishes")
+
+local coins = 0
+
 require("yan")
 
 local sprites = {
@@ -19,6 +23,8 @@ local sprites = {
 local fishingState = "IDLE"
 local currentFish = {Type = "", YPos = 700}
 
+local inventory = {}
+
 local delays = {
     ["Uncatch"] = {
         Delay = 1,
@@ -37,18 +43,35 @@ function StartDelay(name)
 end
 
 function love.load()
+    for fish, _ in pairs(fishes) do
+        inventory[fish] = 0
+    end
+    
     screen = yan:Screen()
     
-    fishLabel = yan:Label(screen, "Fish: 0", 32, "left", "center")
-    fishLabel.Position = UIVector2.new(0,10,0,10)
-    fishLabel.Size = UIVector2.new(0.3,0,0.1,0)
-    fishLabel.TextColor = Color.new(1,1,1,1)
+    coinsLabel = yan:Label(screen, "Coins: 0", 32, "left", "center")
+    coinsLabel.Position = UIVector2.new(0,10,0,10)
+    coinsLabel.Size = UIVector2.new(0.3,0,0.1,0)
+    coinsLabel.TextColor = Color.new(1,1,1,1)
+
+    sellBtn = yan:TextButton(screen, "Sell", 32, "center", "center")
+    sellBtn.Position = UIVector2.new(1,-10,0,10)
+    sellBtn.Size = UIVector2.new(0.2,0,0.1,0)
+    sellBtn.AnchorPoint = Vector2.new(1,0)
+    
+    sellBtn.MouseDown = function ()
+        for fish, value in pairs(inventory) do
+            coins = coins + value
+            inventory[fish] = 0
+        end
+    end
 end
 
 
 function fishing.Caught(fishType)
     fishingState = "CAUGHT"
     
+    inventory[fishType] = inventory[fishType] + fishes[fishType]
     currentFish.Type = fishType
     yan:NewTween(currentFish, yan:TweenInfo(0.5, EasingStyle.QuadInOut), {YPos = 200}):Play()
 
@@ -67,8 +90,8 @@ function love.update(dt)
     
     fishing:Update(dt)
     yan:Update(dt)
-
-    fishLabel.Text = "Fish: "..fishing.FishCount
+    
+    coinsLabel.Text = "Coins: "..tostring(coins)
 
     for _, v in pairs(sprites) do
         v:setFilter("nearest", "nearest")
