@@ -5,7 +5,7 @@ local fishDelay = -1
 
 local rarities = {
     Common = {
-        "Biribiriuo", "ShockedBiribiriuo"
+        "Biribiriuo", "Shocked Biribiriuo"
     },
     
     Uncommon = {

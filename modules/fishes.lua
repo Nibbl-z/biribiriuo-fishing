@@ -1,6 +1,6 @@
 return {
     Biribiriuo = 1,
-    ShockedBiribiriuo = 2,
+    ["Shocked Biribiriuo"] = 2,
 
     Quicknibble = 3,
     Pausegill = 4,
