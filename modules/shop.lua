@@ -1,11 +1,12 @@
 local shop = {}
 require "yan"
 
+shop.Coins = 0
 local upgrades = require("modules.upgrades")
 
 local shopItems = {
     {
-        Name = "Bucket Size Increase",
+        Name = "Barrel Size Increase",
         Price = 10,
         PriceIncrease = 2,
         Purchases = 0,
@@ -13,7 +14,7 @@ local shopItems = {
             upgrades.BucketSize = upgrades.BucketSize + 1
         end,
         Description = function ()
-            return "Increase bucket size from "..upgrades.BucketSize.." to "..(upgrades.BucketSize + 1).."."
+            return "Increase barrel size from "..upgrades.BucketSize.." to "..(upgrades.BucketSize + 1).."."
         end
     }
 }
@@ -21,6 +22,7 @@ local shopItems = {
 function shop:Init()
     self.Screen = yan:Screen()
     self.Screen.ZIndex = 2
+    self.Screen.Enabled = false
 
     frame = yan:Frame(self.Screen)
     frame.Position = UIVector2.new(0.5,0,0.5,0)
@@ -65,6 +67,18 @@ function shop:Init()
 
         buyButton.MouseEnter = function () buyButton.Color = Color.new(41/255, 105/255, 46/255) end
         buyButton.MouseLeave = function () buyButton.Color = Color.new(83/255, 208/255, 93/255) end
+        buyButton.MouseDown = function ()
+            local price = shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases)
+
+            if shop.Coins >= price then
+                shop.Coins = shop.Coins - price
+                shopItem.OnPurchase()
+                shopItem.Purchases = shopItem.Purchases + 1
+                
+                descriptionLabel.Text = shopItem:Description()
+                buyButton.Text = shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases).." Coins"
+            end
+        end
     end
 end
 

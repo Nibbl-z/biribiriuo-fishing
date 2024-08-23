@@ -2,8 +2,7 @@ local fishing = require("modules.fishing")
 local utils = require("yan.utils")
 local fishes = require("modules.fishes")
 local shop = require("modules.shop")
-
-local coins = 0
+local upgrades = require("modules.upgrades")
 
 require("yan")
 
@@ -13,7 +12,10 @@ local sprites = {
     YanPrepare = love.graphics.newImage("/img/yan_prepare.png"),
     YanFishing = love.graphics.newImage("/img/yan_fishing.png"),
     YanCatch = love.graphics.newImage("/img/yan_catch.png"),
-    
+
+    BarrelEmpty = love.graphics.newImage("/img/bucket_empty.png"),
+    BarrelFull = love.graphics.newImage("/img/bucket_full.png"),
+
     StarSmall = love.graphics.newImage("/img/star_small.png"),
     StarSmallFlash = love.graphics.newImage("/img/star_small_flash.png"),
     StarBig = love.graphics.newImage("/img/star_big.png"),
@@ -30,6 +32,16 @@ local fishingState = "IDLE"
 local currentFish = {Type = "", YPos = 700}
 
 local inventory = {}
+
+function GetInventoryCount()
+    local count = 0
+
+    for k, v in pairs(inventory) do
+        count = count + v
+    end
+
+    return count
+end
 
 local delays = {
     ["Uncatch"] = {
@@ -98,14 +110,19 @@ function love.load()
     
     sellBtn.MouseDown = function ()
         local totalValue = 0
+
         for fish, value in pairs(inventory) do
-            coins = coins + value
-            totalValue = totalValue + value
+            shop.Coins = shop.Coins + fishes[fish] * inventory[fish]
+            totalValue = totalValue + fishes[fish] * inventory[fish]
             inventory[fish] = 0
         end
         
         statusLabel.Text = "Sold all fish for "..totalValue.." coins!"
         StartDelay("ResetSell")
+    end
+    
+    shopBtn.MouseDown = function ()
+        shop.Screen.Enabled = not shop.Screen.Enabled
     end
 end
 
@@ -113,9 +130,13 @@ end
 function fishing.Caught(fishType)
     fishingState = "CAUGHT"
     
-    inventory[fishType] = inventory[fishType] + fishes[fishType]
+    inventory[fishType] = inventory[fishType] + 1
     currentFish.Type = fishType
     statusLabel.Text = "Caught a "..fishType.."!"
+
+    if GetInventoryCount() >= upgrades.BucketSize then
+        statusLabel.Text = statusLabel.Text.." Also, your barrel is full, press sell to sell your fish!"
+    end
     yan:NewTween(currentFish, yan:TweenInfo(0.5, EasingStyle.QuadInOut), {YPos = 200}):Play()
 
     StartDelay("Uncatch")
@@ -134,7 +155,7 @@ function love.update(dt)
     fishing:Update(dt)
     yan:Update(dt)
     
-    coinsLabel.Text = "Coins: "..tostring(coins)
+    coinsLabel.Text = "Coins: "..tostring(shop.Coins)
 
     for _, v in pairs(sprites) do
         v:setFilter("nearest", "nearest")
@@ -143,6 +164,8 @@ end
 
 function love.keypressed(key)
     if key == "space" and fishingState == "IDLE" then
+        if GetInventoryCount() >= upgrades.BucketSize then return end
+        
         fishingState = "PREPARE"
     end
 end
@@ -165,6 +188,12 @@ function love.draw()
     
     love.graphics.draw(sprites.Platform, 0, 0, 0, 8, 8)
     
+    if GetInventoryCount() >= upgrades.BucketSize then 
+        love.graphics.draw(sprites.BarrelFull, 0, 0, 0, 8, 8)
+    else
+        love.graphics.draw(sprites.BarrelEmpty, 0, 0, 0, 8, 8)
+    end
+
     if fishingState == "IDLE" then
         love.graphics.draw(sprites.YanIdle, 0, 0, 0, 8, 8)
     elseif fishingState == "PREPARE" then
