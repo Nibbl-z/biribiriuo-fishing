@@ -16,6 +16,19 @@ local shopItems = {
         Description = function ()
             return "Increase barrel size from "..upgrades.BucketSize.." to "..(upgrades.BucketSize + 1).."."
         end
+    },
+
+    {
+        Name = "Better Fishing Rod",
+        Price = 15,
+        PriceIncrease = 5,
+        Purchases = 0,
+        OnPurchase = function ()
+            upgrades.FishingSpeed = upgrades.FishingSpeed + 5
+        end,
+        Description = function ()
+            return "Decrease the time it takes to catch fish by 5%"
+        end
     }
 }
 
@@ -69,7 +82,7 @@ function shop:Init()
         buyButton.MouseLeave = function () buyButton.Color = Color.new(83/255, 208/255, 93/255) end
         buyButton.MouseDown = function ()
             local price = shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases)
-
+            
             if shop.Coins >= price then
                 shop.Coins = shop.Coins - price
                 shopItem.OnPurchase()

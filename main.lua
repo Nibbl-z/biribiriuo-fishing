@@ -133,7 +133,7 @@ function fishing.Caught(fishType)
     inventory[fishType] = inventory[fishType] + 1
     currentFish.Type = fishType
     statusLabel.Text = "Caught a "..fishType.."!"
-
+    
     if GetInventoryCount() >= upgrades.BucketSize then
         statusLabel.Text = statusLabel.Text.." Also, your barrel is full, press sell to sell your fish!"
     end

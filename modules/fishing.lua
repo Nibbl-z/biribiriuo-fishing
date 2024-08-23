@@ -2,7 +2,7 @@ local fishing = {}
 fishing.FishCount = 0
 fishing.IsFishing = false
 local fishDelay = -1
-
+local upgrades = require("modules.upgrades")
 local rarities = {
     Common = {
         "Biribiriuo", "Shocked Biribiriuo"
@@ -44,7 +44,7 @@ end
 function fishing:Fish()
     if self.IsFishing then return end
     self.IsFishing = true
-    fishDelay = love.timer.getTime() + love.math.random(40, 70) / 100
+    fishDelay = love.timer.getTime() + love.math.random(40, 70) / upgrades.FishingSpeed
 end
 
 return fishing
