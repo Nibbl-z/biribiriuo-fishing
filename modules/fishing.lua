@@ -8,6 +8,8 @@ function fishing:Update(dt)
         if love.timer.getTime() > fishDelay then
             self.FishCount = self.FishCount + 1
             self.IsFishing = false
+
+            self.Caught()
         end
     end
 end
