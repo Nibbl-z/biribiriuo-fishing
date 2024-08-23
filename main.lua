@@ -1,7 +1,15 @@
 local fishing = require("modules.fishing")
 require("yan")
 
+local sprites = {
+    Platform = love.graphics.newImage("/img/platform.png"),
+    YanIdle = love.graphics.newImage("/img/yan_idle.png")
+}
+
 function love.load()
+    canvas = love.graphics.newCanvas(100, 75)
+    canvas:setFilter("nearest", "nearest")
+    
     screen = yan:Screen()
 
     fishLabel = yan:Label(screen, "Fish: 0", 32, "left", "center")
@@ -24,5 +32,12 @@ function love.keypressed(key)
 end
 
 function love.draw()
+    love.graphics.setCanvas(canvas)
+
+    love.graphics.draw(sprites.Platform)
+    love.graphics.draw(sprites.YanIdle)
+
+    love.graphics.setCanvas()
+    love.graphics.draw(canvas, 0, 0, 0, 8, 8)
     yan:Draw()
 end
