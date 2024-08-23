@@ -9,7 +9,8 @@ local sprites = {
     YanFishing = love.graphics.newImage("/img/yan_fishing.png"),
     YanCatch = love.graphics.newImage("/img/yan_catch.png"),
 
-    Biribiriuo = love.graphics.newImage("/img/fish/biribiriuo.png")
+    Biribiriuo = love.graphics.newImage("/img/fish/biribiriuo.png"),
+    ShockedBiribiriuo = love.graphics.newImage("/img/fish/shocked_biribiriuo.png")
 }
 
 local fishingState = "IDLE"
@@ -42,10 +43,10 @@ function love.load()
 end
 
 
-function fishing.Caught()
+function fishing.Caught(fishType)
     fishingState = "CAUGHT"
     
-    currentFish.Type = "Biribiriuo"
+    currentFish.Type = fishType
     yan:NewTween(currentFish, yan:TweenInfo(0.5, EasingStyle.QuadInOut), {YPos = 200}):Play()
 
     StartDelay("Uncatch")
