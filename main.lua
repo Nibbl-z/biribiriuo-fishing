@@ -103,10 +103,14 @@ function love.load()
     
     screen = yan:Screen()
     
-    coinsLabel = yan:Label(screen, "Coins: 0", 32, "left", "top")
-    coinsLabel.Position = UIVector2.new(0,10,0,10)
-    coinsLabel.Size = UIVector2.new(0.3,0,0.1,0)
-    coinsLabel.TextColor = Color.new(1,1,1,1)
+    coinsImg = yan:Image(screen, "/img/coin.png")
+    coinsImg.Position = UIVector2.new(0,8,0,8)
+    coinsImg.Size = UIVector2.new(0,32,0,32)
+
+    coinsLabel = yan:Label(screen, "0", 32, "left", "center")
+    coinsLabel.Position = UIVector2.new(0,45,0,8)
+    coinsLabel.Size = UIVector2.new(0.3,0,0,32)
+    coinsLabel.TextColor = Color.new(1,1,0,1)
     
     sellBtn = yan:TextButton(screen, "Sell", 32, "center", "center")
     sellBtn.Position = UIVector2.new(1,-10,0,10)
@@ -156,7 +160,7 @@ function fishing.Caught(fishType)
         statusLabel.Text = statusLabel.Text.." Also, your barrel is full, press sell to sell your fish!"
     end]]
     yan:NewTween(currentFish, yan:TweenInfo(1, EasingStyle.QuintOut), {YPos = 200}):Play()
-
+    
     StartDelay("Uncatch")
 end
 
@@ -173,8 +177,8 @@ function love.update(dt)
     fishing:Update(dt)
     yan:Update(dt)
     
-    coinsLabel.Text = "Coins: "..tostring(shop.Coins)
-
+    coinsLabel.Text = tostring(shop.Coins)
+    
     for _, v in pairs(sprites) do
         v:setFilter("nearest", "nearest")
     end
