@@ -51,7 +51,7 @@ local delays = {
         Function = function ()
             fishingState = "IDLE"
             statusLabel.Text = ""
-            yan:NewTween(currentFish, yan:TweenInfo(0.5, EasingStyle.QuadInOut), {YPos = 700}):Play()
+            yan:NewTween(currentFish, yan:TweenInfo(1, EasingStyle.QuintIn), {YPos = 700}):Play()
         end
     },
 
@@ -74,13 +74,24 @@ end
 
 function love.load()
     shop:Init()
-    for i = 1, 20 do
+    
+    local function chooseStarPos()
         local x = love.math.random(0,100)
-        local y = love.math.random(0,73)
+        local y = love.math.random(0,60)
+        if utils:CheckCollision(x, y, 5, 5, 13, 35, 21, 40) then return chooseStarPos() end
+        for _, star in ipairs(stars) do
+            if utils:Distance(x, y, star.x, star.y) < 7 then return chooseStarPos() end
+        end
+        
+        return x, y
+    end
+    
+    for i = 1, 40 do
+        local x, y = chooseStarPos()
         local t = love.math.random(1, 2)
         table.insert(stars, {x = x, y = y, t = t})
     end
-
+    
     for fish, _ in pairs(fishes) do
         inventory[fish] = 0
     end
@@ -139,7 +150,7 @@ function fishing.Caught(fishType)
     --[[if GetInventoryCount() >= upgrades.BucketSize then
         statusLabel.Text = statusLabel.Text.." Also, your barrel is full, press sell to sell your fish!"
     end]]
-    yan:NewTween(currentFish, yan:TweenInfo(0.5, EasingStyle.QuadInOut), {YPos = 200}):Play()
+    yan:NewTween(currentFish, yan:TweenInfo(1, EasingStyle.QuintOut), {YPos = 200}):Play()
 
     StartDelay("Uncatch")
 end

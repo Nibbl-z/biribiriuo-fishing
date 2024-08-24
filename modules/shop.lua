@@ -69,7 +69,7 @@ function shop:Init()
     frame.Size = UIVector2.new(0.7, 0, 0.7, 0)
     frame.CornerRoundness = 16
     frame.Color = Color.new(0.2, 0.2, 0.2, 1)
-    frame.Padding = UIVector2.new(0, 5, 0, 5)
+    frame.Padding = UIVector2.new(0,5,0,5)
     
     for i, shopItem in ipairs(shopItems) do
         local itemContainer = yan:Frame(self.Screen)
@@ -77,18 +77,18 @@ function shop:Init()
         itemContainer.Position = UIVector2.new(0, 0, 0.2 * (i - 1), 10 * (i - 1))
         itemContainer.Size = UIVector2.new(1, 0, 0.2, 0)
         itemContainer.CornerRoundness = 11
-        itemContainer.Padding = UIVector2.new(0, 5, 0, 5)
+        itemContainer.Padding = UIVector2.new(0,10,0,10)
         itemContainer:SetParent(frame)
 
         itemContainer.ZIndex = 2
         
-        local nameLabel = yan:Label(self.Screen, shopItem.Name, 24, "left", "center")
+        local nameLabel = yan:Label(self.Screen, shopItem.Name, 24, "left", "top")
         nameLabel.Size = UIVector2.new(0.5,0,0.7,0)
         nameLabel.TextColor = Color.new(1,1,1,1)
         nameLabel:SetParent(itemContainer)
         nameLabel.ZIndex = 3
         
-        local descriptionLabel = yan:Label(self.Screen, shopItem:Description(), 15, "left", "center")
+        local descriptionLabel = yan:Label(self.Screen, shopItem:Description(), 15, "left", "bottom")
         descriptionLabel.Size = UIVector2.new(0.5,0,0.3,0)
         descriptionLabel.Position = UIVector2.new(0,0,0.7,0)
         descriptionLabel.TextColor = Color.new(0.7,0.7,0.7,1)
