@@ -82,20 +82,20 @@ function shop:Init()
 
         itemContainer.ZIndex = 2
         
-        local nameLabel = yan:Label(self.Screen, shopItem.Name, 24, "left", "top")
+        local nameLabel = yan:Label(self.Screen, shopItem.Name, 24, "left", "top", "/W95FA.otf")
         nameLabel.Size = UIVector2.new(0.5,0,0.7,0)
         nameLabel.TextColor = Color.new(1,1,1,1)
         nameLabel:SetParent(itemContainer)
         nameLabel.ZIndex = 3
         
-        local descriptionLabel = yan:Label(self.Screen, shopItem:Description(), 15, "left", "bottom")
+        local descriptionLabel = yan:Label(self.Screen, shopItem:Description(), 15, "left", "bottom", "/W95FA.otf")
         descriptionLabel.Size = UIVector2.new(0.5,0,0.3,0)
         descriptionLabel.Position = UIVector2.new(0,0,0.7,0)
         descriptionLabel.TextColor = Color.new(0.7,0.7,0.7,1)
         descriptionLabel:SetParent(itemContainer)
         descriptionLabel.ZIndex = 3
         
-        local buyButton = yan:TextButton(self.Screen, shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases).." Coins", 32, "center", "center")
+        local buyButton = yan:TextButton(self.Screen, shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases).." Coins", 32, "center", "center", "/W95FA.otf")
         buyButton.Size = UIVector2.new(0.5,-10,1,0)
         buyButton.Color = Color.new(83/255, 208/255, 93/255)
         buyButton.Position = UIVector2.new(1,0,0,0)

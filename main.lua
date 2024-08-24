@@ -107,22 +107,30 @@ function love.load()
     coinsImg.Position = UIVector2.new(0,8,0,8)
     coinsImg.Size = UIVector2.new(0,32,0,32)
 
-    coinsLabel = yan:Label(screen, "0", 32, "left", "center")
+    coinsLabel = yan:Label(screen, "0", 32, "left", "center", "/W95FA.otf")
     coinsLabel.Position = UIVector2.new(0,45,0,8)
     coinsLabel.Size = UIVector2.new(0.3,0,0,32)
     coinsLabel.TextColor = Color.new(1,1,0,1)
     
-    sellBtn = yan:TextButton(screen, "Sell", 32, "center", "center")
+    sellBtn = yan:TextButton(screen, "Sell", 32, "center", "center", "/W95FA.otf")
     sellBtn.Position = UIVector2.new(1,-10,0,10)
     sellBtn.Size = UIVector2.new(0.2,0,0.1,0)
     sellBtn.AnchorPoint = Vector2.new(1,0)
-
-    shopBtn = yan:TextButton(screen, "Shop", 32, "center", "center")
+    sellBtn.Color = Color.new(0.2,0.2,0.2,1)
+    sellBtn.TextColor = Color.new(1,1,1,1)
+    sellBtn.MouseEnter = function () sellBtn.Color = Color.new(0.1,0.1,0.1,1) end
+    sellBtn.MouseLeave = function () sellBtn.Color = Color.new(0.2,0.2,0.2,1) end
+    
+    shopBtn = yan:TextButton(screen, "Shop", 32, "center", "center",  "/W95FA.otf")
     shopBtn.Position = UIVector2.new(1,-10,0.1,20)
     shopBtn.Size = UIVector2.new(0.2,0,0.1,0)
     shopBtn.AnchorPoint = Vector2.new(1,0)
+    shopBtn.Color = Color.new(0.2,0.2,0.2,1)
+    shopBtn.TextColor = Color.new(1,1,1,1)
+    shopBtn.MouseEnter = function () shopBtn.Color = Color.new(0.1,0.1,0.1,1) end
+    shopBtn.MouseLeave = function () shopBtn.Color = Color.new(0.2,0.2,0.2,1) end
     
-    statusLabel = yan:Label(screen, "", 20, "left", "bottom")
+    statusLabel = yan:Label(screen, "", 20, "left", "bottom", "/W95FA.otf")
     statusLabel.Position = UIVector2.new(0, 10, 1, -10)
     statusLabel.AnchorPoint = Vector2.new(0, 1)
     statusLabel.Size = UIVector2.new(1,0,0.1,0)
