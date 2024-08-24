@@ -4,7 +4,7 @@ require "yan"
 shop.Coins = 0
 local upgrades = require("modules.upgrades")
 
-local shopItems = {
+shop.ShopItems = {
     {
         Name = "Barrel Size Increase",
         Price = 10,
@@ -13,11 +13,15 @@ local shopItems = {
         OnPurchase = function ()
             upgrades.BucketSize = upgrades.BucketSize + 1
         end,
+        UpgradeName = "BucketSize",
+        GetUpgradeValue = function (purchases)
+            return 5 + purchases
+        end,
         Description = function ()
             return "Increase barrel size from "..upgrades.BucketSize.." to "..(upgrades.BucketSize + 1).."."
         end
     },
-
+    
     {
         Name = "Better Fishing Rod",
         Price = 15,
@@ -25,6 +29,10 @@ local shopItems = {
         Purchases = 0,
         OnPurchase = function ()
             upgrades.FishingSpeed = upgrades.FishingSpeed + 5
+        end,
+        UpgradeName = "FishingSpeed",
+        GetUpgradeValue = function (purchases)
+            return 20 + purchases * 5
         end,
         Description = function ()
             return "Decrease the time it takes to catch fish by 5%"
@@ -39,11 +47,15 @@ local shopItems = {
         OnPurchase = function ()
             upgrades.MinimumLuck = upgrades.MinimumLuck + 5
         end,
+        UpgradeName = "MinimumLuck",
+        GetUpgradeValue = function (purchases)
+            return 0 + purchases * 5
+        end,
         Description = function ()
             return "Increase the chances of rarer fish by 5%"
         end
     },
-
+    
     {
         Name = "Salesman",
         Price = 20,
@@ -51,6 +63,10 @@ local shopItems = {
         Purchases = 0,
         OnPurchase = function ()
             upgrades.CoinMultiplier = upgrades.CoinMultiplier + 0.2
+        end,
+        UpgradeName = "CoinMultiplier",
+        GetUpgradeValue = function (purchases)
+            return 1 + purchases * 0.2
         end,
         Description = function ()
             return "Increase coin sell multiplier from "..upgrades.CoinMultiplier.."x to "..(upgrades.CoinMultiplier + 0.2).."x"
@@ -71,7 +87,7 @@ function shop:Init()
     frame.Color = Color.new(0.2, 0.2, 0.2, 1)
     frame.Padding = UIVector2.new(0,5,0,5)
     
-    for i, shopItem in ipairs(shopItems) do
+    for i, shopItem in ipairs(self.ShopItems) do
         local itemContainer = yan:Frame(self.Screen)
         itemContainer.Color = Color.new(0,0,0,0.5)
         itemContainer.Position = UIVector2.new(0, 0, 0.2 * (i - 1), 10 * (i - 1))
@@ -103,7 +119,7 @@ function shop:Init()
         buyButton.TextColor = Color.new(1,1,1,1)
         buyButton:SetParent(itemContainer)
         buyButton.ZIndex = 3
-
+        
         buyButton.MouseEnter = function () buyButton.Color = Color.new(41/255, 105/255, 46/255) end
         buyButton.MouseLeave = function () buyButton.Color = Color.new(83/255, 208/255, 93/255) end
         buyButton.MouseDown = function ()
