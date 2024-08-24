@@ -26,6 +26,11 @@ local sprites = {
     Pausegill = love.graphics.newImage("/img/fish/pausegill.png"),
     Quicknibble = love.graphics.newImage("/img/fish/quicknibble.png"),
     Threefish = love.graphics.newImage("/img/fish/threefish.png"),
+    ["Plain Ol' Fish"] = love.graphics.newImage("/img/fish/plain_ol_fish.png"),
+    Nibbler = love.graphics.newImage("/img/fish/nibbler.png"),
+    ["Touchy Fish"] = love.graphics.newImage("/img/fish/touchy_fish.png"),
+    ["King of the Pond"] = love.graphics.newImage("/img/fish/king_of_the_pond.png"),
+    ["Mystery Fish"] = love.graphics.newImage("/img/fish/mystery_fish.png"),
 }
 
 local fishingState = "IDLE"

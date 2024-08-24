@@ -5,17 +5,22 @@ local fishDelay = -1
 local upgrades = require("modules.upgrades")
 local rarities = {
     Common = {
-        "Biribiriuo", "Shocked Biribiriuo"
+        "Biribiriuo", "Shocked Biribiriuo", "Plain Ol' Fish"
     },
     
     Uncommon = {
-        "Pausegill", "Quicknibble", "Threefish"
+        "Pausegill", "Quicknibble", "Threefish", "Touchy Fish", "Nibbler"
+    },
+    
+    Rare = {
+        "Mystery Fish", "King of the Pond"
     }
 }
 
 local fishingChances = {
     {Type = "Common", Chance = 60},
-    {Type = "Uncommon", Chance = 40},
+    {Type = "Uncommon", Chance = 30},
+    {Type = "Rare", Chance = 10},
 }
 
 function fishing:RollFish()
