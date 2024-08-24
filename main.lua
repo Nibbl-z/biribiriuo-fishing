@@ -35,6 +35,11 @@ local sprites = {
     ["Mystery Fish"] = love.graphics.newImage("/img/fish/mystery_fish.png"),
 }
 
+local sfx = {
+    Cast = love.audio.newSource("/sfx/cast.mp3", "static"),
+    Catch = love.audio.newSource("/sfx/catch.mp3", "static")
+}
+
 local fishingState = "IDLE"
 local currentFish = {Type = "", YPos = 700}
 
@@ -74,9 +79,10 @@ function love.quit()
 end
 
 function love.load()
-    shop:Init()
+    
     inventory:Load()
     save:Load()
+    shop:Init()
     local function chooseStarPos()
         local x = love.math.random(0,100)
         local y = love.math.random(0,60)
@@ -143,7 +149,6 @@ function love.load()
         
         statusLabel.Text = "Sold all fish for "..totalValue.." coins!"
         StartDelay("ResetSell")
-        
     end
     
     shopBtn.MouseDown = function ()
@@ -154,6 +159,7 @@ end
 
 
 function fishing.Caught(fishType)
+    sfx.Catch:play()
     fishingState = "CAUGHT"
     
     inventory.Inventory[fishType] = inventory.Inventory[fishType] + 1
@@ -199,6 +205,7 @@ end
 
 function love.keyreleased(key)
     if key == "space" and fishingState == "PREPARE" then
+        sfx.Cast:play()
         fishingState = "FISHING"
         fishing:Fish()
     end
