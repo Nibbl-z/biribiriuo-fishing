@@ -37,7 +37,9 @@ local sprites = {
 
 local sfx = {
     Cast = love.audio.newSource("/sfx/cast.mp3", "static"),
-    Catch = love.audio.newSource("/sfx/catch.mp3", "static")
+    Catch = love.audio.newSource("/sfx/catch.mp3", "static"),
+    Click = love.audio.newSource("/sfx/click.wav", "static"),
+    Sell = love.audio.newSource("/sfx/sell.wav", "static")
 }
 
 local fishingState = "IDLE"
@@ -136,6 +138,8 @@ function love.load()
     statusLabel.TextColor = Color.new(1,1,1,1)
     
     sellBtn.MouseDown = function ()
+        sfx.Click:play()
+        sfx.Sell:play()
         local totalValue = 0
         
         for fish, value in pairs(inventory.Inventory) do
@@ -152,6 +156,7 @@ function love.load()
     end
     
     shopBtn.MouseDown = function ()
+        sfx.Click:play()
         save:Save()
         shop.Screen.Enabled = not shop.Screen.Enabled
     end
