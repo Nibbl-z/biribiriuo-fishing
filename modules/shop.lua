@@ -80,46 +80,46 @@ function shop:Init()
     self.Screen = yan:Screen()
     self.Screen.ZIndex = 2
     self.Screen.Enabled = false
-
+    
     frame = yan:Frame(self.Screen)
     frame.Position = UIVector2.new(0.5,0,0.5,0)
     frame.AnchorPoint = Vector2.new(0.5, 0.5)
-    frame.Size = UIVector2.new(0.7, 0, 0.7, 0)
+    frame.Size = UIVector2.new(1, 0, 1, 0)
     frame.CornerRoundness = 16
-    frame.Color = Color.new(0.2, 0.2, 0.2, 1)
-    frame.Padding = UIVector2.new(0,5,0,5)
+    frame.Color = Color.new(0.2, 0.2, 0.2, 0)
     
     for i, shopItem in ipairs(self.ShopItems) do
         local itemContainer = yan:Frame(self.Screen)
-        itemContainer.Color = Color.new(0,0,0,0.5)
-        itemContainer.Position = UIVector2.new(0, 0, 0.2 * (i - 1), 10 * (i - 1))
-        itemContainer.Size = UIVector2.new(1, 0, 0.2, 0)
+        itemContainer.Color = Color.new(0,0,0,0)
+        itemContainer.Position = UIVector2.new(0, 232, 0, 176 + (72 * (i - 1)))
+        itemContainer.Size = UIVector2.new(0, 336, 0, 48)
         itemContainer.CornerRoundness = 11
-        itemContainer.Padding = UIVector2.new(0,10,0,10)
+        itemContainer.Padding = UIVector2.new(0,5,0,5)
         itemContainer:SetParent(frame)
-
+        
         itemContainer.ZIndex = 2
         
-        local nameLabel = yan:Label(self.Screen, shopItem.Name, 24, "left", "top", "/W95FA.otf")
+        local nameLabel = yan:Label(self.Screen, shopItem.Name, 16, "left", "top", "/W95FA.otf")
         nameLabel.Size = UIVector2.new(0.5,0,0.7,0)
         nameLabel.TextColor = Color.new(1,1,1,1)
         nameLabel:SetParent(itemContainer)
         nameLabel.ZIndex = 3
         
-        local descriptionLabel = yan:Label(self.Screen, shopItem:Description(), 15, "left", "bottom", "/W95FA.otf")
+        local descriptionLabel = yan:Label(self.Screen, shopItem:Description(), 12, "left", "bottom", "/W95FA.otf")
         descriptionLabel.Size = UIVector2.new(0.5,0,0.3,0)
         descriptionLabel.Position = UIVector2.new(0,0,0.7,0)
-        descriptionLabel.TextColor = Color.new(0.7,0.7,0.7,1)
+        descriptionLabel.TextColor = Color.new(1,1,1,1)
         descriptionLabel:SetParent(itemContainer)
         descriptionLabel.ZIndex = 3
         
-        local buyButton = yan:TextButton(self.Screen, shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases).." Coins", 32, "center", "center", "/W95FA.otf")
+        local buyButton = yan:TextButton(self.Screen, shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases).." Coins", 20, "center", "center", "/W95FA.otf")
         buyButton.Size = UIVector2.new(0.5,-10,1,0)
         buyButton.Color = Color.new(83/255, 208/255, 93/255)
         buyButton.Position = UIVector2.new(1,0,0,0)
         buyButton.AnchorPoint = Vector2.new(1,0)
         buyButton.TextColor = Color.new(1,1,1,1)
         buyButton:SetParent(itemContainer)
+        buyButton.CornerRoundness = 0
         buyButton.ZIndex = 3
         
         buyButton.MouseEnter = function () buyButton.Color = Color.new(41/255, 105/255, 46/255) end

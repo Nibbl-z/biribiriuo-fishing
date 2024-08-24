@@ -33,6 +33,9 @@ local sprites = {
     ["Touchy Fish"] = love.graphics.newImage("/img/fish/touchy_fish.png"),
     ["King of the Pond"] = love.graphics.newImage("/img/fish/king_of_the_pond.png"),
     ["Mystery Fish"] = love.graphics.newImage("/img/fish/mystery_fish.png"),
+    
+    MainMenu = love.graphics.newImage("/img/ui_main.png"),
+    ShopMenu = love.graphics.newImage("/img/ui_shop.png")
 }
 
 local sfx = {
@@ -117,19 +120,19 @@ function love.load()
     sellBtn.Position = UIVector2.new(1,-10,0,10)
     sellBtn.Size = UIVector2.new(0.2,0,0.1,0)
     sellBtn.AnchorPoint = Vector2.new(1,0)
-    sellBtn.Color = Color.new(0.2,0.2,0.2,1)
-    sellBtn.TextColor = Color.new(1,1,1,1)
-    sellBtn.MouseEnter = function () sellBtn.Color = Color.new(0.1,0.1,0.1,1) end
-    sellBtn.MouseLeave = function () sellBtn.Color = Color.new(0.2,0.2,0.2,1) end
+    sellBtn.Color = Color.new(0.2,0.2,0.2,0)
+    sellBtn.TextColor = Color.new(1,1,1,0)
+    --sellBtn.MouseEnter = function () sellBtn.Color = Color.new(0.1,0.1,0.1,1) end
+    --sellBtn.MouseLeave = function () sellBtn.Color = Color.new(0.2,0.2,0.2,1) end
     
     shopBtn = yan:TextButton(screen, "Shop", 32, "center", "center",  "/W95FA.otf")
     shopBtn.Position = UIVector2.new(1,-10,0.1,20)
     shopBtn.Size = UIVector2.new(0.2,0,0.1,0)
     shopBtn.AnchorPoint = Vector2.new(1,0)
-    shopBtn.Color = Color.new(0.2,0.2,0.2,1)
-    shopBtn.TextColor = Color.new(1,1,1,1)
-    shopBtn.MouseEnter = function () shopBtn.Color = Color.new(0.1,0.1,0.1,1) end
-    shopBtn.MouseLeave = function () shopBtn.Color = Color.new(0.2,0.2,0.2,1) end
+    shopBtn.Color = Color.new(0.2,0.2,0.2,0)
+    shopBtn.TextColor = Color.new(1,1,1,0)
+    --shopBtn.MouseEnter = function () shopBtn.Color = Color.new(0.1,0.1,0.1,1) end
+    --shopBtn.MouseLeave = function () shopBtn.Color = Color.new(0.2,0.2,0.2,1) end
     
     statusLabel = yan:Label(screen, "", 20, "left", "bottom", "/W95FA.otf")
     statusLabel.Position = UIVector2.new(0, 10, 1, -10)
@@ -246,6 +249,12 @@ function love.draw()
     if currentFish.Type ~= "" then
         love.graphics.draw(sprites[currentFish.Type], 350, currentFish.YPos, 0, 8, 8)
     end
+    
+    if shop.Screen.Enabled then
+        love.graphics.draw(sprites.ShopMenu, 0, 0, 0, 8, 8)
+    end
 
     yan:Draw()
+    
+    love.graphics.draw(sprites.MainMenu, 0, 0, 0, 8, 8)
 end
