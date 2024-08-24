@@ -112,11 +112,13 @@ function love.load()
         local totalValue = 0
 
         for fish, value in pairs(inventory) do
-            shop.Coins = shop.Coins + fishes[fish] * inventory[fish]
             totalValue = totalValue + fishes[fish] * inventory[fish]
             inventory[fish] = 0
         end
         
+        totalValue = math.ceil(totalValue * upgrades.CoinMultiplier)
+        shop.Coins = shop.Coins + totalValue
+
         statusLabel.Text = "Sold all fish for "..totalValue.." coins!"
         StartDelay("ResetSell")
     end
@@ -134,9 +136,9 @@ function fishing.Caught(fishType)
     currentFish.Type = fishType
     statusLabel.Text = "Caught a "..fishType.."!"
     
-    if GetInventoryCount() >= upgrades.BucketSize then
+    --[[if GetInventoryCount() >= upgrades.BucketSize then
         statusLabel.Text = statusLabel.Text.." Also, your barrel is full, press sell to sell your fish!"
-    end
+    end]]
     yan:NewTween(currentFish, yan:TweenInfo(0.5, EasingStyle.QuadInOut), {YPos = 200}):Play()
 
     StartDelay("Uncatch")
@@ -164,7 +166,11 @@ end
 
 function love.keypressed(key)
     if key == "space" and fishingState == "IDLE" then
-        if GetInventoryCount() >= upgrades.BucketSize then return end
+        if GetInventoryCount() >= upgrades.BucketSize then
+            statusLabel.Text = "Your barrel is full! Press sell to sell your fish!"
+            StartDelay("ResetSell")
+            return 
+        end
         
         fishingState = "PREPARE"
     end

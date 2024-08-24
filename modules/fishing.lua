@@ -18,25 +18,32 @@ local fishingChances = {
     {Type = "Uncommon", Chance = 40},
 }
 
+function fishing:RollFish()
+    local roll = love.math.random(0,100000) / 1000
+
+    if roll < upgrades.MinimumLuck then fishing:RollFish() return end
+
+    local fish = ""
+    local total = 0
+    
+    for _, fishtype in ipairs(fishingChances) do
+        if roll < fishtype.Chance + total then
+            fish = rarities[fishtype.Type][love.math.random(#rarities[fishtype.Type])]
+            break
+        end
+
+        total = total + fishtype.Chance
+    end
+    self.FishCount = self.FishCount + 1
+    self.IsFishing = false
+
+    self.Caught(fish)
+end
+
 function fishing:Update(dt)
     if self.IsFishing then
         if love.timer.getTime() > fishDelay then
-            local roll = love.math.random(0,100000) / 1000
-            local fish = ""
-            local total = 0
-            
-            for _, fishtype in ipairs(fishingChances) do
-                if roll < fishtype.Chance + total then
-                    fish = rarities[fishtype.Type][love.math.random(#rarities[fishtype.Type])]
-                    break
-                end
-
-                total = total + fishtype.Chance
-            end
-            self.FishCount = self.FishCount + 1
-            self.IsFishing = false
-
-            self.Caught(fish)
+            fishing:RollFish()
         end
     end
 end

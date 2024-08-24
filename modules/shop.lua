@@ -29,6 +29,32 @@ local shopItems = {
         Description = function ()
             return "Decrease the time it takes to catch fish by 5%"
         end
+    },
+
+    {
+        Name = "Luck of the Stars",
+        Price = 20,
+        PriceIncrease = 5,
+        Purchases = 0,
+        OnPurchase = function ()
+            upgrades.MinimumLuck = upgrades.MinimumLuck + 5
+        end,
+        Description = function ()
+            return "Increase the chances of rarer fish by 5%"
+        end
+    },
+
+    {
+        Name = "Salesman",
+        Price = 20,
+        PriceIncrease = 10,
+        Purchases = 0,
+        OnPurchase = function ()
+            upgrades.CoinMultiplier = upgrades.CoinMultiplier + 0.2
+        end,
+        Description = function ()
+            return "Increase coin sell multiplier from "..upgrades.CoinMultiplier.."x to "..(upgrades.CoinMultiplier + 0.2).."x"
+        end
     }
 }
 
