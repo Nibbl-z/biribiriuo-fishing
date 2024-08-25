@@ -48,6 +48,8 @@ local sfx = {
 local fishingState = "IDLE"
 local currentFish = {Type = "", YPos = 700}
 
+local music = love.audio.newSource("/music/music.ogg", "stream")
+
 local delays = {
     ["Uncatch"] = {
         Delay = 1,
@@ -163,6 +165,9 @@ function love.load()
         save:Save()
         shop.Screen.Enabled = not shop.Screen.Enabled
     end
+
+    music:setLooping(true)
+    music:play()
 end
 
 
