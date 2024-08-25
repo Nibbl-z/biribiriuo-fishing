@@ -22,6 +22,7 @@ function textbutton:New(screen, text, textSize, align, verticalAlign, fontPath)
     end
     
     o.TextColor = Color.new(0,0,0,1)
+    o.Font:setFilter("nearest", "nearest")
     
     function o:Draw()
         local pX, pY, sX, sY = o:GetDrawingCoordinates()

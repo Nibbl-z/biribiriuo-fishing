@@ -86,7 +86,9 @@ function love.quit()
 end
 
 function love.load()
-    
+    love.window.setTitle("Biribiriuo Fishing")
+    love.window.setIcon(love.image.newImageData("/img/icon.png"))
+
     inventory:Load()
     save:Load()
     shop:Init()
@@ -136,7 +138,7 @@ function love.load()
     --shopBtn.MouseEnter = function () shopBtn.Color = Color.new(0.1,0.1,0.1,1) end
     --shopBtn.MouseLeave = function () shopBtn.Color = Color.new(0.2,0.2,0.2,1) end
     
-    statusLabel = yan:Label(screen, "", 20, "left", "bottom", "/W95FA.otf")
+    statusLabel = yan:Label(screen, "", 32, "left", "bottom", "/W95FA.otf")
     statusLabel.Position = UIVector2.new(0, 10, 1, -10)
     statusLabel.AnchorPoint = Vector2.new(0, 1)
     statusLabel.Size = UIVector2.new(1,0,0.1,0)
@@ -148,7 +150,6 @@ function love.load()
         local totalValue = 0
         
         for fish, value in pairs(inventory.Inventory) do
-            print(inventory.Inventory[fish])
             totalValue = totalValue + fishes[fish] * inventory.Inventory[fish]
             inventory.Inventory[fish] = 0
         end
@@ -252,7 +253,7 @@ function love.draw()
     end
     
     if currentFish.Type ~= "" then
-        love.graphics.draw(sprites[currentFish.Type], 350, currentFish.YPos, 0, 8, 8)
+        love.graphics.draw(sprites[currentFish.Type], 352, utils:Round(currentFish.YPos, 8), 0, 8, 8)
     end
     
     if shop.Screen.Enabled then

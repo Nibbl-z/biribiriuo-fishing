@@ -22,8 +22,6 @@ function save:Load()
     end
     
     for k, v in pairs(loadedSave.Inventory) do
-        print(k, v)
-        print(type(v))
         inventory.Inventory[k] = tonumber(v)
     end
 end
@@ -66,7 +64,6 @@ function save:Save()
     end
     
     for k, v in pairs(inventory.Inventory) do
-        print(k, v)
         save.Inventory[k] = v
     end
     
