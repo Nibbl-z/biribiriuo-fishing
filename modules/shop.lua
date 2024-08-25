@@ -75,6 +75,8 @@ shop.ShopItems = {
 }
 
 local clickSfx = love.audio.newSource("/sfx/click.wav", "static")
+local errorSfx = love.audio.newSource("/sfx/error.mp3", "static")
+local purchaseSfx = love.audio.newSource("/sfx/purchase.wav", "static")
 
 function shop:Init()
     self.Screen = yan:Screen()
@@ -129,12 +131,15 @@ function shop:Init()
             
             if shop.Coins >= price then
                 clickSfx:play()
+                purchaseSfx:play()
                 shop.Coins = shop.Coins - price
                 shopItem.OnPurchase()
                 shopItem.Purchases = shopItem.Purchases + 1
                 
                 descriptionLabel.Text = shopItem:Description()
                 buyButton.Text = shopItem.Price + (shopItem.PriceIncrease * shopItem.Purchases).." Coins"
+            else
+                errorSfx:play()
             end
         end
     end

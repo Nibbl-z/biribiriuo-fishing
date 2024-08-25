@@ -7,11 +7,15 @@ local upgrades = require("modules.upgrades")
 
 function save:Load()
     love.filesystem.setIdentity(love.filesystem.getIdentity())
+    
+    local exists = love.filesystem.getInfo("save")
+    if exists == nil then return end
+
     local saveData = love.filesystem.read("save")
     local loadedSave = loadstring(saveData)()
     
     shop.Coins = loadedSave.Coins
-
+    
     for _, v in ipairs(shop.ShopItems) do
         v.Purchases = loadedSave.Shop[v.Name]
         upgrades[v.UpgradeName] = v.GetUpgradeValue(v.Purchases)
